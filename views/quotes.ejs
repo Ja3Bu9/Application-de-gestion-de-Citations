@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ja3Bu9 Quotes</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
     <link rel="stylesheet" href="/style.css">
     <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light&display=swap" rel="stylesheet">
 </head>
@@ -22,18 +24,23 @@
                     <th class="column">text</th>  
                     <th class="column">source</th>  
                     <th class="column">Auteur ID</th>  
+                    <th style="width: 100px;" class="column"></th>  
+
 
                 </tr>  
             </thead>  
              <tbody>  
              <% quotes.forEach(function (citation) { %>
                 <tr>  
-                    <td class="column"><%= citation.id %></td>  
+                    <td class="column"><%= citation.id %> </td>  
                     <td class="column"><%= citation.text %></td>  
                     <td class="column"><%= citation.source %></td>
                     <td class="column"><%= citation.nom %></td>
+                    <td><a href="/delete/<%= citation.id %>" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
 
-                </tr>                                   
+                </tr>
+                                                   
              <% }) %>
              </tbody>
         </table>  
