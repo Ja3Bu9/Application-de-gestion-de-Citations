@@ -1,4 +1,3 @@
-var http = require("http");
 var express = require('express');
 var app = express();
 var mysql = require('mysql');
@@ -53,7 +52,8 @@ app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
 
 app.get('/', function (req, rep) {
-    rep.sendFile(__dirname + '/index.html');
+    rep.render('add');
+
 })
 
 var obj = {};
@@ -71,7 +71,6 @@ app.get('/quotes', function (req, rep) {
 })
 
 
-// display edit book page
 app.get('/quotes/(:id)', function (req, rep, next) {
 
     let id = req.params.id;
@@ -79,14 +78,11 @@ app.get('/quotes/(:id)', function (req, rep, next) {
     connection.query('SELECT * FROM citation WHERE id = ' + id, function (err, rows, fields) {
         if (err) throw err
 
-        // if user not found
         if (rows.length <= 0) {
             req.flash('error', err)
             rep.redirect('/quotes')
         }
-        // if book found
         else {
-            // render to edit.ejs
             rep.render('quote', {
                 text: rows[0].text,
                 source: rows[0].source,
@@ -109,16 +105,12 @@ app.post('/', function (req, res, next) {
     if (text.length === 0 || auteur.length === 0 || source.length === 0) {
         errors = true;
 
-        // set flash message
         req.flash('error', "Please enter citation , auteur and source");
-        // // render to add.ejs with flash message
-        // res.render('books/add', {
-        //     name: name,
-        //     author: author
-        // })
+        res.render('add');
+
+      
     }
 
-    // if no error
     if (!errors) {
 
         
@@ -128,17 +120,8 @@ app.post('/', function (req, res, next) {
         }
 
         connection.query('INSERT INTO auteur SET ?', form_auteur, function (err, result) {
-            //if(err) throw err
             if (err) {
                 req.flash('error', err)
-
-                // // render to add.ejs
-                // res.render('books/add', {
-                //     name: form_data.name,
-                //     author: form_data.author
-                // })
-                console.log(1)
-
 
             } else {
 
@@ -148,25 +131,12 @@ app.post('/', function (req, res, next) {
                     source: source,
                     id_auteur: result.insertId
                 }
-                // insert query
                 connection.query('INSERT INTO citation SET ?', form_data, function (err, result) {
-                    //if(err) throw err
                     if (err) {
                         req.flash('error', err)
-
-                        // // render to add.ejs
-                        // res.render('books/add', {
-                        //     name: form_data.name,
-                        //     author: form_data.author
-                        // })
-                        console.log(1)
-
-
                     } else {
-
                         req.flash('success', 'Book successfully added');
                         res.redirect('/quotes');
-                        console.log(result.insertId)
                     }
                 })
             }
@@ -177,28 +147,9 @@ app.post('/', function (req, res, next) {
 })
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 app.get('/update', function (req, rep, next) {
     rep.render('update',);
-
-
 })
-
 
 app.post('/update', function (req, res, next) {
     let id = req.body.id;
@@ -208,31 +159,24 @@ app.post('/update', function (req, res, next) {
     let errors = false;
 
     console.log(req.params.id)
-    if (text.length === 0 || auteur.length === 0 || source.length === 0) {
+    if (id.length === 0 ||text.length === 0 || auteur.length === 0 || source.length === 0) {
         errors = true;
-
-        // set flash message
-        req.flash('error', "Please enter name and author");
-       
+        
+        req.flash('error', "Please enter citation , auteur and source");
+        res.render('update');
     }
 
-    // if no error
     if (!errors) {
-
         var form_data = {
             id: id,
             text: text,
             source: source
         }
-        // update query
+
         connection.query('UPDATE citation SET ? WHERE id = ' + id, form_data, function (err, result) {
-            //if(err) throw err
             if (err) {
-                // set flash message
-                req.flash('error', err)
-              
-                console.log(form_data)
-            } else {
+                req.flash('error', err)           
+                } else {
                 req.flash('success', 'Book successfully updated');
                 res.redirect('/quotes');
             }
@@ -245,83 +189,17 @@ app.post('/update', function (req, res, next) {
 
 
 app.get('/delete/(:id)', function (req, res, next) {
-
     let id = req.params.id;
-
     connection.query('DELETE FROM citation WHERE id = ' + id, function (err, result) {
-        //if(err) throw err
         if (err) {
-            // set flash message
             req.flash('error', err)
-            // redirect to books page
             res.redirect('/quotes')
         } else {
-            // set flash message
             req.flash('success', 'Book successfully deleted! ID = ' + id)
-            // redirect to books page
             res.redirect('/quotes')
         }
     })
 })
-
-
-
-
-
-
-// // update book data
-// app.post('/', function(req, res, next) {
-
-//     let citation = req.params.citation;
-//     let auteur = req.body.auteur;
-//     let source = req.body.source;
-//     let errors = false;
-
-//     if(citation.length === 0 || auteur.length === 0 || source.length === 0) {
-//         errors = true;
-
-//         // set flash message
-//         req.flash('error', "Please enter name and author");
-//         // // render to add.ejs with flash message
-//         // res.render('books/edit', {
-//         //     id: req.params.id,
-//         //     name: name,
-//         //     author: author
-//         // })
-//     }
-
-//     // if no error
-//     if( !errors ) {
-
-//         var form_data = {
-//             citation: citation,
-//             auteur: autreur,
-//             source: source
-//         }
-//         // update query
-//         connection.query('UPDATE citation SET ? WHERE id = ' + id, form_data, function(err, result) {
-//             //if(err) throw err
-//             if (err) {
-//                 // set flash message
-//                 req.flash('error', err)
-//                 // render to edit.ejs
-//                 res.render('books/edit', {
-//                     id: req.params.id,
-//                     name: form_data.name,
-//                     author: form_data.author
-//                 })
-//             } else {
-//                 req.flash('success', 'Book successfully updated');
-//                 res.redirect('/books');
-//             }
-//         })
-//     }
-// })
-
-
-
-
-
 
 
 
