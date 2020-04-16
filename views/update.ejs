@@ -25,13 +25,11 @@
 
     <h1> Update quotes</h1>
     <div class="form">
-        
-        <form method="POST" action="/update" class="form">
-
-            <div class="form-group">
-                <label>ID</label>
-                <input placeholder="nom" name="id" class="input" id="nom" type="text">
-            </div>
+        <% test.forEach(function (citation) { %>
+            
+        <form method="POST" action="/update/<%= citation.id %>" class="form">
+            <% }) %>
+            
     
         <div class="form-group">
             <label>Citation</label>

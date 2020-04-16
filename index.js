@@ -147,42 +147,165 @@ app.post('/', function (req, res, next) {
 })
 
 
-app.get('/update', function (req, rep, next) {
-    rep.render('update',);
+
+
+app.get('/update/:id', function (req, rep, next) {
+    let id = req.params.id
+
+    connection.query("SELECT * FROM citation WHERE id = '" + id + "' ",(err,result) =>{
+      if(!err){
+        rep.render('update',{test : result})
+  
+      }
+      else {
+        rep.send(err)
+      }
+})
 })
 
-app.post('/update', function (req, res, next) {
-    let id = req.body.id;
+
+app.post('/update/:id', function(req,res){
+
+    let id = req.params.id ;
     let text = req.body.citation;
     let auteur = req.body.auteur;
     let source = req.body.source;
-    let errors = false;
+  
+  
+    connection.query("UPDATE citation SET text = '" + text + "', source = '" + source + "' WHERE id = '" + id + "'",(err,result) =>{
+      if(!err){
+        connection.query("UPDATE auteur SET nom = '" + auteur + "' WHERE id = '" + id + "'",(err,result) =>{
+          if(!err) {
+            res.redirect("/quotes")
+          } else {
+            console.log(2)
+          }
+  
+      })
+    }
+    else{
+      console.log(1)
+  
+    }
+  
+  })
+  
+  })
 
-    console.log(req.params.id)
-    if (id.length === 0 ||text.length === 0 || auteur.length === 0 || source.length === 0) {
-        errors = true;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// app.get('/update/:id', function (req, rep, next) {
+
+//         rep.render('update')
+  
+
+// })
+
+// app.post('/update/:id', function(req, res, next) {
+
+//     let id = req.params.id;
+//     let text = req.body.citation;
+//     let auteur = req.body.auteur;
+//     let source = req.body.source;
+//     let errors = false;
+
+//     if(id.length === 0 ||text.length === 0 || auteur.length === 0 || source.length === 0) {
+//         errors = true;
+
+//         // set flash message
+//         req.flash('error', "Please enter name and author");
+//         // render to add.ejs with flash message
+//         res.render('update');
+//     }
+
+//     // if no error
+//     if( !errors ) {
+
+//         var form_data = {
+//                         id: id,
+//                         text: text,
+//                         source: source
+//                     }
+//         // update query
+//         connection.query('UPDATE citation SET ? WHERE id = ' + id, form_data, function(err, result) {
+//             //if(err) throw err
+//             if (err) {
+//                 // set flash message
+//                 req.flash('error', err)
+//                 // render to edit.ejs
+                
+//             } else {
+//                 req.flash('success', 'Book successfully updated');
+//                 res.redirect('/quotes');
+//             }
+//         })
+//     }
+// })
+
+
+
+
+
+
+
+
+
+
+// app.post('/update', function (req, res, next) {
+//     let id = req.body.id;
+//     let text = req.body.citation;
+//     let auteur = req.body.auteur;
+//     let source = req.body.source;
+//     let errors = false;
+
+//     console.log(req.params.id)
+//     if (id.length === 0 ||text.length === 0 || auteur.length === 0 || source.length === 0) {
+//         errors = true;
         
-        req.flash('error', "Please enter citation , auteur and source");
-        res.render('update');
-    }
+//         req.flash('error', "Please enter citation , auteur and source");
+//         res.render('update');
+//     }
 
-    if (!errors) {
-        var form_data = {
-            id: id,
-            text: text,
-            source: source
-        }
+//     if (!errors) {
+//         var form_data = {
+//             id: id,
+//             text: text,
+//             source: source
+//         }
 
-        connection.query('UPDATE citation SET ? WHERE id = ' + id, form_data, function (err, result) {
-            if (err) {
-                req.flash('error', err)           
-                } else {
-                req.flash('success', 'Book successfully updated');
-                res.redirect('/quotes');
-            }
-        })
-    }
-})
+//         connection.query('UPDATE citation SET ? WHERE id = ' + id, form_data, function (err, result) {
+//             if (err) {
+//                 req.flash('error', err)           
+//                 } else {
+//                 req.flash('success', 'Book successfully updated');
+//                 res.redirect('/quotes');
+//             }
+//         })
+//     }
+// })
 
 
 

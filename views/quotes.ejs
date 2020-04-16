@@ -32,7 +32,9 @@
                     <th class="column">text</th>  
                     <th class="column">source</th>  
                     <th class="column">Auteur ID</th>  
-                    <th style="width: 100px;" class="column"></th>  
+                    <th style="width: 50px;" class="column"></th>  
+                    <th style="width: 80px;" class="column"></th>  
+
 
 
                 </tr>  
@@ -46,6 +48,7 @@
                     <td class="column"><%= citation.nom %></td>
                     <td><a href="/delete/<%= citation.id %>" class="btn btn-sm btn-danger">Delete</a>
                     </td>
+                    <td><a href="/update/<%= citation.id %> " class="btn btn-sm btn-success"> UPDATE</a> </td>
 
                 </tr>
                                                    
