@@ -311,23 +311,40 @@ app.post('/update/:id', function(req,res){
 
 
 
-app.get('/delete/(:id)', function (req, res, next) {
-    let id = req.params.id;
-    connection.query('DELETE FROM citation WHERE id = ' + id, function (err, result) {
-        if (err) {
-            req.flash('error', err)
+// app.get('/delete/(:id)', function (req, res, next) {
+//     let id = req.params.id;
+//     connection.query('DELETE FROM citation WHERE id = ' + id, function (err, result) {
+//         if (err) {
+//             req.flash('error', err)
+//             res.redirect('/quotes')
+//         } else {
+//             req.flash('success', 'Book successfully deleted! ID = ' + id)
+//             res.redirect('/quotes')
+//         }
+//     })
+// })
+
+
+
+
+app.get('/delete/:id', function(req,res){
+    let id = req.params.id
+  
+    connection.query('DELETE FROM citation WHERE id = "' + id + '"',(err,result) =>{
+      if(!err){
+        connection.query('DELETE FROM auteur WHERE id = "' + id + '"',(err,result) =>{
+          if(!err)
             res.redirect('/quotes')
-        } else {
-            req.flash('success', 'Book successfully deleted! ID = ' + id)
-            res.redirect('/quotes')
-        }
+          else
+            res.send(err)
+        })
+      } 
+      else
+      res.send(err)
+  
     })
-})
-
-
-
-
-
+  
+  } )
 
 
 
