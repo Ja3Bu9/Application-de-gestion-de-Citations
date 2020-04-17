@@ -1,6 +1,5 @@
 # CRUD Application by Ja3Bu9
 
-=======================
 
 https://github.com/Ja3Bu9/Application-de-gestion-de-Citations
 
@@ -8,7 +7,7 @@ https://github.com/Ja3Bu9/Application-de-gestion-de-Citations
 ## What Is This?
 -------------
 
-Application de gestion de Citations (using nodejs , expressjs and mysql)
+CRUD Application de gestion de Citations (using nodejs , expressjs and mysql)
 
 
 ## How To Use The Application ?
