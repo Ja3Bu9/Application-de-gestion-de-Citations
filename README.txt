@@ -27,6 +27,8 @@ How To Install The Modules
 --------------------------
 
 
-``` npm install ```
+``` 
+npm install 
+```
 
 import sql file (quotes.sql) to mysql 
