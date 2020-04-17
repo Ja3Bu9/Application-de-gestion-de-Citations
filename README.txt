@@ -26,9 +26,8 @@ How To Use The Application ?
 How To Install The Modules
 --------------------------
 
+ 
+1. npm install 
 
-``` 
-npm install 
-```
 
-import sql file (quotes.sql) to mysql 
+2. import sql file (quotes.sql) to mysql 
