@@ -1,17 +1,16 @@
-#CRUD Application by Ja3Bu9
+# CRUD Application by Ja3Bu9
 
-=======================
 
 https://github.com/Ja3Bu9/Application-de-gestion-de-Citations
 
 
-##What Is This?
+## What Is This?
 -------------
 
-Application de gestion de Citations (using nodejs , expressjs and mysql)
+CRUD Application de gestion de Citations (using nodejs , expressjs and mysql)
 
 
-##How To Use The Application ?
+## How To Use The Application ?
 -----------------------
 
 1. Add quotes ( '/' or add button )
@@ -25,12 +24,14 @@ Application de gestion de Citations (using nodejs , expressjs and mysql)
 5. Display specific quote ( '/quote/(id)' )
 
 
-##How To Install The Modules
+## How To Install The Modules
 --------------------------
 
  
-1. npm install 
-
+1.
+```
+npm install 
+```
 2. import sql file (quotes.sql) to mysql 
 
 3. mysql informations :
