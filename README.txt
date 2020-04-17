@@ -22,6 +22,8 @@ How To Use The Application ?
 
 4. Display quotes ( '/quotes' )
 
+5. Display specific quote ( '/quote/(id)' )
+
 
 How To Install The Modules
 --------------------------
