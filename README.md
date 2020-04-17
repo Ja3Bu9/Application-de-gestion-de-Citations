@@ -32,3 +32,7 @@ Application de gestion de Citations (using nodejs , expressjs and mysql)
 1. npm install 
 
 2. import sql file (quotes.sql) to mysql 
+
+3. mysql informations :
+    user: 'root'
+    password: 'phpmysami'
